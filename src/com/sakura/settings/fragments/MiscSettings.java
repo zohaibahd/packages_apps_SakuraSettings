@@ -37,9 +37,13 @@ import com.android.internal.logging.nano.MetricsProto;
 import com.sakura.settings.fragments.misc.GamingMode;
 
 import com.android.settings.R;
+import com.sakura.settings.utils.DeviceUtils;
 
 public class MiscSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
+
+    private static final String HWKEYS_DISABLED = "hardware_keys_disable";
+    private SwitchPreference mHardwareKeysDisable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,21 @@ public class MiscSettings extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.sakura_settings_misc);
         ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
+
+        final boolean hasPowerKey = DeviceUtils.hasPowerKey();
+        final boolean hasHomeKey = DeviceUtils.hasHomeKey(getActivity());
+        final boolean hasBackKey = DeviceUtils.hasBackKey(getActivity());
+        final boolean hasMenuKey = DeviceUtils.hasMenuKey(getActivity());
+        final boolean hasAssistKey = DeviceUtils.hasAssistKey(getActivity());
+        final boolean hasAppSwitchKey = DeviceUtils.hasAppSwitchKey(getActivity());
+        final boolean hasCameraKey = DeviceUtils.hasCameraKey(getActivity());
+        final boolean hasVolumeKeys = DeviceUtils.hasVolumeKeys(getActivity());
+
+        mHardwareKeysDisable = (SwitchPreference) findPreference(HWKEYS_DISABLED);
+        if (!hasHomeKey && !hasBackKey && !hasMenuKey && !hasAssistKey && !hasAppSwitchKey) {
+            prefScreen.removePreference(mHardwareKeysDisable);
+        }
+
     }
 
     @Override

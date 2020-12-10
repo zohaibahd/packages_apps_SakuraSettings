@@ -26,6 +26,12 @@
         android:summary="@string/screenshot_sound_summary"
         android:defaultValue="true" />
 
+    <!-- hw keys disable switch -->
+    <com.sakura.settings.preferences.SecureSettingSwitchPreference
+        android:key="hardware_keys_disable"
+        android:title="@string/hwkeys_disabled_title"
+        android:summary="@string/hwkeys_disabled_summary" />
+
     <!-- volume dialog -->
     <com.sakura.settings.preferences.SystemSettingSeekBarPreference
         android:key="audio_panel_view_timeout"
